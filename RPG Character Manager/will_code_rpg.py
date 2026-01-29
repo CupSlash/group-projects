@@ -37,6 +37,7 @@ def modifier_selector(text, modifer_list):
                         break
                     else:
                         print("Not an option.")
+
                 except:
                     print("Not an option.")
         stats = modifer_list[class_race]
