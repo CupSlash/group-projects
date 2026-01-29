@@ -9,6 +9,11 @@ spells={ #spells and their descriptions
 
 }
 
+equipment={
+    "hand_1":'',
+    "hand_2":'',
+    "armour":'',
+}
 
 
 cls="wizard"
@@ -40,6 +45,55 @@ def ensure(l,h):
                 return int(num)
             else:
                 print("Please enter a valid input")
+
+#epuip function for equiping equipment
+def equip(equipment,cls):
+    while True:
+        print(f'Hand 1:{equipment['hand_1']}\nHand 2:{equipment['hand_2']}\nArmour:{equipment['armour']}')
+        inp=input("Would you like to edit\n1:hands\n2:armour")
+        match inp:
+            case "1":
+                inp=input("are you\n1:equiping\n2:stowing")
+                match inp:
+                    case '1':
+                        inp=input("is the item 2 handed?\n1:yes\n2:no")
+                        match inp:
+                            case '1':
+                                inp=input("what are you equiping? ")
+                                if equipment["hand_1"] =="" and equipment["hand_2"] =="":
+                                    equipment["hand_1"],equipment["hand_2"] =f"{inp}",f"{inp}"
+                                else:print("your hands ar too full")
+                            case '2':
+                                inp=input("what are you equiping? ")
+                                if equipment["hand_1"] =="":
+                                    equipment["hand_1"] =f"{inp}"
+                                elif equipment["hand_2"] =="":
+                                    equipment["hand_2"] =f"{inp}"
+                                else:print("your hands ar too full")
+                    case "2":
+                        inp=input(f"What are you stowing\n1:{equipment['hand_1']}\n2:{equipment['hand_2']}")
+                        match inp:
+                            case "1":
+                                equipment["hand_1"]=''
+                            case '2':
+                                equipment["hand_2"]=''
+                return equipment
+            case "2":
+                inp=input("are you\n1:equiping\n2:dequiping")
+                match inp:
+                    case "1":
+                        inp=input("How heavy is the armour?\n1:light\n2:medium\n3:Heavy")
+                        if (cls =='rouge' and (inp=="2" or inp=='3')) or cls=='wizard':
+                            print("You do not have training in this kind of armour")
+                        else:
+                            inp=input("what armour are you equiping?")
+                            if equipment['armour']=='':
+                                equipment['armour']=f'{inp}'
+                            else:
+                                print("you are already wearing armour")
+                    case '2':
+                        equipment['armour']=''
+                return equipment
 #view function (prints dictionary contents name and info)
 def view(dictionary,dictname):
     for key in dictionary:
@@ -118,9 +172,9 @@ def edit(dictionary,dictname):
     return dictionary
 #User input for choosing dictionary to edit
 def choice(tuple):
-    print(f"What would you like to edit?\n1:weapons\n2:inventory")
+    print(f"What would you like to edit?\n1:weapons\n2:inventory\n3:equipment")
     if cls=="wizard":
-        print("3:spells")
+        print("4:spells")
     inp=ensure(1,len(tuple)+1)
     if inp==1:
         edit(weapons,"weapons")
@@ -129,6 +183,9 @@ def choice(tuple):
         edit(inventory,"inventory")
         return inventory
     if inp==3:
+        equip(equipment,cls)
+        return equipment
+    if inp==4:
         edit(spells,"spells")
         return spells
 choice(dictionaries)
