@@ -1,22 +1,11 @@
 # WH, SW, JQ, BH 2nd
 
 from will_code_rpg import character_creator
-<<<<<<< HEAD
-from perfun import choice
-=======
 from compare_and_search import compare
 from compare_and_search import search_char
 from skills_lvs import edit_skills
 from skills_lvs import edit_level
-'''from perfun import insure
-from perfun import ensure
-from perfun import equip
-from perfun import view
-from perfun import plus 
-from perfun import minus
-from perfun import search_dict
-from perfun import edit
-from perfun import choice'''
+from perfun import choice
 import sys
 import time as t
 def sprint(text, delay=0.035):  
@@ -56,19 +45,18 @@ skills_library = {
     }  
 }  
 
->>>>>>> d3724426f65f107243bca69871a0c7bfde6b0edd
 characters = dict()
 
 races = {
     "Human": (1,1,1,1,1,1),
-    "Fishman": (1,2,5,6,3,1),
+    "Aquatic": (1,2,5,6,3,1),
     "Avian": (2,3,6,74,8,69)
     
 }
 classes = {
     "wizard": (1,1,1,1,1,1),
     "rogue": (1,1,1,1,1,1),
-    "fighter": (1,1,1,1,1,1)
+    "fighter": (1,1,1,1,1,1),
 }
 
 weapons={ #weapons that character has
@@ -108,12 +96,6 @@ def ediding_menu():
             sprint("no characters.")
             break
         else:
-<<<<<<< HEAD
-            print("Please select a charcter")
-            for key in characters:
-                print(key)
-            match input("Do you want to (as a number).\n1: Edit character Inventories/equipment\n2: Edit a character \n3: Edit a character \n4: Exit\n").strip():
-=======
             while True:
                 count = 0
                 new_character_list = []
@@ -135,13 +117,15 @@ def ediding_menu():
                             break
                     except:
                         sprint("not a character.")
-            match input("Do you want to (as a number).\n1: Edit a character \n2:Edit character inventory \n4: Exit\n").strip():
->>>>>>> d3724426f65f107243bca69871a0c7bfde6b0edd
+            match input("Do you want to (as a number).\n1:Edit Character Inventory \n2:Edit character Level \n3: Edit character Skills \n4: Exit\n").strip():
                 case "1":
                     choice(character)
+                    pass
                 case "2":
+                    edit_level(character["level"],character["dexterity"],character["constitution"],character["intelligence"],character["charisma"],character["streighth"],character["wisdom"])
                     pass
                 case "3":
+                    edit_skills(character["current_skills"],character["class"],character["level"])
                     pass
                 case "4":
                     break

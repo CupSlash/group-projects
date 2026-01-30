@@ -30,20 +30,40 @@ def search_char(characters):
         search_class= input("What is their class?\n").strip()
         sprint(f"{characters[{search_class}]}")
     elif stat_to_search_by == "level":
-        search_level= input("What is their level?\n").strip()
-        sprint(f"{characters[{search_level}]}")
+        search_level_str= input("What is their level?\n").strip()
+        for i in range(20):
+            search_level_var == 0
+            if search_level_str == i:
+                search_level_var = i
+                print(f"{characters[search_level_var]}")
+                break
+            else:
+                search_level_var += 1
+            print("No characters found.")
     elif stat_to_search_by == "str":
         search_str = input("What is their strength?\n").strip()
-        sprint(f"{characters[{search_str}]}")
+        if (f"{characters[{search_str}]}") == False:
+            print("No characters found.")
+        else:
+            print(f"{characters[search_str]}")
     elif stat_to_search_by == "dex":
         search_dex = input("What is their dexterity?\n").strip()
-        sprint(f"{characters[{search_dex}]}")
+        if (f"{characters[{search_dex}]}") == False:
+            print("No characters found.")
+        else:
+            print(f"{characters[search_dex]}")
     elif stat_to_search_by == "cha":
         search_cha = input("What is their charisma?\n").strip()
-        sprint(f"{characters[{search_cha}]}")
+        if (f"{characters[{search_cha}]}") == False:
+            print("No characters found.")
+        else:
+            print(f"{characters[search_cha]}")
     elif stat_to_search_by == "int":
         search_int = input("What is their intelligence?\n").strip()
-        sprint(f"{characters[{search_int}]}")
+        if (f"{characters[{search_int}]}") == False:
+            print("No characters found.")
+        else:
+            print(f"{characters[search_int]}")
     elif stat_to_search_by == "name":
         search_name = input("What is their name?\n").strip()
         sprint(f"{characters[{search_name}]}")

@@ -1,7 +1,7 @@
 # WH 2nd 
 import sys
 import time as t
-import math as m
+from skills_lvs import edit_skills
 def sprint(text, delay=0.025):  
     for char in text:  
         sys.stdout.write(char)  
@@ -73,7 +73,7 @@ def character_creator(races, classes ,characters = dict,skills = dict):
     new_character["race"] = modifier_selector("race",races)
     new_character["class"] = modifier_selector("class",classes)
     while True:
-        new_character["level"] = m.floor(help_isint_input(f"What is {character_name}'s level?\n"))
+        new_character["level"] = m.floor(help_isint_input(f"What is {character_name}'s level (1-20)?\n"))
         if new_character["level"] > 0 and new_character["level"] <= 20:
             break
         else:
@@ -82,9 +82,5 @@ def character_creator(races, classes ,characters = dict,skills = dict):
     for item in text:
         new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
     characters[character_name] = new_character
-    #for item in (1,3,5,7,10,15,20):
-        #if new_character["level"] == item:
-            #break
-        #else:
-    #new_character["skills"] = skills[new_character["class"]][new_character["level"]]
+    new_character["skills"] = edit_skills({},new_character["class"],new_character["level"])
     return characters
