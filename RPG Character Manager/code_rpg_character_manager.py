@@ -1,7 +1,7 @@
 # WH, SH, JQ 2nd
 
 from will_code_rpg import character_creator
-
+from perfun import choice
 characters = dict()
 
 races = {
@@ -31,9 +31,12 @@ def ediding_menu():
             print("no characters.")
             break
         else:
-            match input("Do you want to (as a number).\n1: Edit a character \n2: Edit a character \n3: Edit a character \n4: Exit\n").strip():
+            print("Please select a charcter")
+            for key in characters:
+                print(key)
+            match input("Do you want to (as a number).\n1: Edit character Inventories/equipment\n2: Edit a character \n3: Edit a character \n4: Exit\n").strip():
                 case "1":
-                    pass
+                    choice(character)
                 case "2":
                     pass
                 case "3":
