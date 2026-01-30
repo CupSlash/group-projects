@@ -1,36 +1,90 @@
 # WH 2nd 
-
-class character:
-    class_ch = str()
-    race = str()
-    level = int()
-    strength = str()
-    dexterity = str()
-    wisdom = str()
-    charisma = str()
-    intelligence = str()
-    constitution =str()
-    inventory = dict()
-    weapons = dict()
-    spells = dict()
-    Equipment_slots = dict()
-
+import sys
+import time as t
+import math as m
+def sprint(text, delay=0.025):  
+    for char in text:  
+        sys.stdout.write(char)  
+        sys.stdout.flush()  
+        t.sleep(delay)  
+    print() 
 def help_isint_input(text):
-    want = input(text)
-    try:
-        return int(want)
-    except:
+    while True:
+        want = input(text)
         try:
-            return float(want)
+            return int(want)
         except:
-            print("Not a number.")
+            try:
+                return float(want)
+            except:
+                print("Not a number.")
 
 def modifier_selector(text, modifer_list):
-    pass
-def character_creator(characters):
-    character_name = input("What is the new character's name?")
-    new_character = character
-    text = ["level","strength","dexterity","wisdom","charisma","intelligence","constitution"]
-    modifier = [new_character.level,new_character.strength,new_character.dexterity,new_character.level,new_character.level,new_character.level]
-    for item in range(len(text)):
-        new_character.level = help_isint_input(f"")
+    while True:
+
+        while True:
+            print(f"what {text} do you want?")
+            count = 0
+            list_to_modifer = list()
+            for class_race in modifer_list.keys():
+                list_to_modifer.append(class_race)
+                count += 1
+                print(f"{count}: {class_race}")
+            want = input()
+
+            try:
+                class_race = modifer_list[want.strip()]
+                class_race = want
+                break
+            except:
+                try:
+                    want = int(want)
+                    if want > 0:
+                        class_race = modifer_list[list_to_modifer[want-1]]
+                        class_race = list_to_modifer[int(want)-1]
+                        break
+                    else:
+                        print("Not an option.")
+
+                except:
+                    print("Not an option.")
+        stats = modifer_list[class_race]
+        stats_text = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
+        print("Do you want:")
+        for item in range(6):
+            c_stat = stats[item]
+            c_text = stats_text[item]
+            if c_stat > 0:
+                print(f"+{c_stat}: {c_text}")
+            else:
+                print(f"{c_stat}: {c_text}")
+        want = input("(1: yes/ 2: no)\n").strip()
+        while True:
+            if want == "1" or want == "yes":
+                return class_race
+            elif want == "1" or want == "no":
+                break
+            else:
+                print("not an option.")
+
+def character_creator(races, classes ,characters = dict,skills = dict):
+    character_name = input("What is the new character's name?\n")
+    new_character = dict()
+    new_character["race"] = modifier_selector("race",races)
+    new_character["class"] = modifier_selector("class",classes)
+    while True:
+        new_character["level"] = m.floor(help_isint_input(f"What is {character_name}'s level?\n"))
+        if new_character["level"] > 0 and new_character["level"] <= 20:
+            break
+        else:
+            print("Too big or small.")
+    text = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
+    for item in text:
+        new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
+    characters[character_name] = new_character
+    for item in (1,3,5,7,10,15,20):
+        if new_character["level"] == item:
+            break
+        else:
+    new_character["skills"] = skills[new_character["class"]][new_character["level"]]
+    return characters
