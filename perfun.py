@@ -1,3 +1,4 @@
+
 #Dictionaries 
 import sys
 import time as t
@@ -11,12 +12,9 @@ weapons={ #weapons that character has
 
 }
 inventory={ #items that player has
-
 }
 spells={ #spells and their descriptions
-
 }
-
 equipment={
     "hand_1":'',
     "hand_2":'',
@@ -30,7 +28,6 @@ if cls=="wizard":
     dictionaries=(weapons,inventory,spells) #tuple of the dictionary names
 else:
     dictionaries=(weapons,inventory)
-
 #number ensure function (make sure user input is a number)
 def insure():
     while True:
@@ -145,6 +142,8 @@ def plus(dictionary,dictname):
     return dictionary
 #Remove function (sprint dictionary, asks user for number Weapon that they want to remove,removes them to a dictionary)
 def minus(dictionary):
+    for key in dictionary:
+        sprint(key)
     sprint("Note: If you remove it you will have to manually add it back!")
     name=input(f"Which item would you like to remove from your inventory?\n")
     if name in dictionary:
