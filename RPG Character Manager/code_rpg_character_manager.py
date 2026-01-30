@@ -129,7 +129,7 @@ def ediding_menu():
                 case "1":
                     pass
                 case "2":
-                    choice()
+                    pass
                 case "3":
                     pass
                 case "4":
