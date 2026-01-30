@@ -1,6 +1,9 @@
 # WH, SW, JQ, BH 2nd
 
 from will_code_rpg import character_creator
+<<<<<<< HEAD
+from perfun import choice
+=======
 from compare_and_search import compare
 from compare_and_search import search_char
 from skills_lvs import edit_skills
@@ -53,6 +56,7 @@ skills_library = {
     }  
 }  
 
+>>>>>>> d3724426f65f107243bca69871a0c7bfde6b0edd
 characters = dict()
 
 races = {
@@ -104,6 +108,12 @@ def ediding_menu():
             sprint("no characters.")
             break
         else:
+<<<<<<< HEAD
+            print("Please select a charcter")
+            for key in characters:
+                print(key)
+            match input("Do you want to (as a number).\n1: Edit character Inventories/equipment\n2: Edit a character \n3: Edit a character \n4: Exit\n").strip():
+=======
             while True:
                 count = 0
                 new_character_list = []
@@ -126,8 +136,9 @@ def ediding_menu():
                     except:
                         sprint("not a character.")
             match input("Do you want to (as a number).\n1: Edit a character \n2:Edit character inventory \n4: Exit\n").strip():
+>>>>>>> d3724426f65f107243bca69871a0c7bfde6b0edd
                 case "1":
-                    pass
+                    choice(character)
                 case "2":
                     choice()
                 case "3":
