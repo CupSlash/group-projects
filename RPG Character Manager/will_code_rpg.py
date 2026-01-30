@@ -58,11 +58,11 @@ def modifier_selector(text, modifer_list):
                 print(f"+{c_stat}: {c_text}")
             else:
                 print(f"{c_stat}: {c_text}")
-        want = input("(1: yes/ 2: no)\n").strip()
         while True:
+            want = input("(1: yes/ 2: no)\n").strip()
             if want == "1" or want == "yes":
                 return class_race
-            elif want == "1" or want == "no":
+            elif want == "2" or want == "no":
                 break
             else:
                 print("not an option.")
@@ -82,9 +82,9 @@ def character_creator(races, classes ,characters = dict,skills = dict):
     for item in text:
         new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
     characters[character_name] = new_character
-    for item in (1,3,5,7,10,15,20):
-        if new_character["level"] == item:
-            break
-        else:
-    new_character["skills"] = skills[new_character["class"]][new_character["level"]]
+    #for item in (1,3,5,7,10,15,20):
+        #if new_character["level"] == item:
+            #break
+        #else:
+    #new_character["skills"] = skills[new_character["class"]][new_character["level"]]
     return characters

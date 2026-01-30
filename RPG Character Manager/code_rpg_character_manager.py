@@ -140,7 +140,7 @@ def ediding_menu():
                 case "1":
                     choice(character)
                 case "2":
-                    choice()
+                    pass
                 case "3":
                     pass
                 case "4":
