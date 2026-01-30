@@ -1,5 +1,13 @@
 # WH 2nd 
-
+import sys
+import time as t
+import math as m
+def sprint(text, delay=0.025):  
+    for char in text:  
+        sys.stdout.write(char)  
+        sys.stdout.flush()  
+        t.sleep(delay)  
+    print() 
 def help_isint_input(text):
     while True:
         want = input(text)
@@ -59,13 +67,24 @@ def modifier_selector(text, modifer_list):
             else:
                 print("not an option.")
 
-def character_creator(races, classes ,characters = dict):
+def character_creator(races, classes ,characters = dict,skills = dict):
     character_name = input("What is the new character's name?\n")
     new_character = dict()
     new_character["race"] = modifier_selector("race",races)
     new_character["class"] = modifier_selector("class",classes)
-    text = ["level","strength","dexterity","wisdom","charisma","intelligence","constitution"]
+    while True:
+        new_character["level"] = m.floor(help_isint_input(f"What is {character_name}'s level?\n"))
+        if new_character["level"] > 0 and new_character["level"] <= 20:
+            break
+        else:
+            print("Too big or small.")
+    text = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
     for item in text:
         new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
     characters[character_name] = new_character
+    for item in (1,3,5,7,10,15,20):
+        if new_character["level"] == item:
+            break
+        else:
+    new_character["skills"] = skills[new_character["class"]][new_character["level"]]
     return characters
