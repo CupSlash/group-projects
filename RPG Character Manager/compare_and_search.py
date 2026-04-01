@@ -13,7 +13,7 @@ def compare(characters):
     while compare_first_character not in characters:
         sprint("Try again. That character doesn't exit yet. :")
         compare_first_character = input(f"{characters}, Select your first character.\n")       
-    compare_second_character = input(f"{characters} "elect your second character.\n")
+    compare_second_character = input(f"{characters}, Select your second character.\n")
     while compare_second_character not in characters:
         sprint("Try again. That character doesn't exit yet. :")
         compare_second_character = input(f"{characters}, Select your first character.\n")  

@@ -53,7 +53,7 @@ def ensure(l,h):
 #epuip function for equiping equipment
 def equip(equipment,cls):
     while True:
-        sprint(f'Hand 1:{equipment['hand_1']}\nHand 2:{equipment['hand_2']}\nArmour:{equipment['armour']}')
+        sprint(f"Hand 1:{equipment['hand_1']}\nHand 2:{equipment['hand_2']}\nArmour:{equipment['armour']}")
         sprint("Would you like to edit\n1:hands\n2:armour")
         inp=input()
         match inp:
@@ -120,7 +120,7 @@ def equip(equipment,cls):
 #view function (sprints dictionary contents name and info)
 def view(dictionary,dictname):
     for key in dictionary:
-        if dictname=="weapons" or "dictname=="inventory":
+        if dictname=="weapons" or dictname=="inventory":
             sprint(f"{key}:{dictionary[key][0]}, value:{dictionary[key][1]}, weight:{dictionary[key][2]}")
         elif dictname=="spells":
             sprint(f"{key}:{dictionary[key][0]}, level:{dictionary[key][1]}, casting:{dictionary[key][2]}")
@@ -215,4 +215,3 @@ def choice(character):
     if inp==4:
         edit(spells,"spells")
         return spells
-choice(character_dict)
