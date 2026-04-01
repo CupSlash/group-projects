@@ -1,5 +1,10 @@
 # WH, SW, JQ, BH 2nd
-
+#Matplotlib
+#Pandas
+#Faker
+pip install faker
+fake = Faker()
+name = fake.name
 from will_code_rpg import character_creator
 from compare_and_search import compare
 from compare_and_search import search_char
