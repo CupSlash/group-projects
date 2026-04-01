@@ -127,7 +127,7 @@ def ediding_menu():
                     choice(character)
                     pass
                 case "2":
-                    edit_level(character["level"],character["dexterity"],character["constitution"],character["intelligence"],character["charisma"],character["streighth"],character["wisdom"])
+                    edit_level(character["level"],character["dexterity"],character["constitution"],character["intelligence"],character["charisma"],character["strength"],character["wisdom"])
                     pass
                 case "3":
                     edit_skills(character["current_skills"],character["class"],character["level"])
