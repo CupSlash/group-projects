@@ -85,7 +85,7 @@ def edit_skills(current_skills, character_class, level):
     if not to_add:  
         sprint("No new skills available to add.")  
         return current_skills  
-    sprint("Available skills to add:", ", ".join(sorted(to_add)))  
+    sprint("Available skills to add:", ", ".join(sorted(to_add)))  #Problem I think
     chosen = input("Enter one skill to add (or 'cancel' to skip): ").strip()  
     if chosen in to_add:  
         current_skills.add(chosen)  
