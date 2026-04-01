@@ -1,6 +1,7 @@
 # WH 2nd 
 import sys
 import time as t
+import math as m
 from skills_lvs import edit_skills
 def sprint(text, delay=0.025):  
     for char in text:  
