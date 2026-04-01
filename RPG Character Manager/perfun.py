@@ -6,7 +6,7 @@ def sprint(text, delay=0.015):
         sys.stdout.write(char)  
         sys.stdout.flush()  
         t.sleep(delay)  
-    sprint() 
+    print() 
 weapons={ #weapons that character has
 
 }
@@ -120,7 +120,7 @@ def equip(equipment,cls):
 #view function (sprints dictionary contents name and info)
 def view(dictionary,dictname):
     for key in dictionary:
-        if dictname=="weapons"or"inventory":
+        if dictname=="weapons" or "dictname=="inventory":
             sprint(f"{key}:{dictionary[key][0]}, value:{dictionary[key][1]}, weight:{dictionary[key][2]}")
         elif dictname=="spells":
             sprint(f"{key}:{dictionary[key][0]}, level:{dictionary[key][1]}, casting:{dictionary[key][2]}")
@@ -215,4 +215,4 @@ def choice(character):
     if inp==4:
         edit(spells,"spells")
         return spells
-choice(dictionaries)
+choice(character_dict)
