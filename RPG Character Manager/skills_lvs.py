@@ -1,12 +1,7 @@
 
 import sys
 import time as t
-def sprint(text, delay=0.025):  
-    for char in text:  
-        sys.stdout.write(char)  
-        sys.stdout.flush()  
-        t.sleep(delay)  
-    sprint() 
+
 skills_library = {  
     "wizard": {  
         1: {"arcana", "spellcasting"},  
@@ -41,32 +36,32 @@ def edit_level(level, dex, con, int_stat, cha, str_stat, wis):
     try:  
         new_level = int(input("Enter your new level: "))  
     except ValueError:  
-        sprint("Invalid input.")  
+        print("Invalid input.")  
         return level, dex, con, int_stat, cha, str_stat, wis  
   
     lv_diff = new_level - level  
     if lv_diff == 0:  
-        sprint("Level unchanged.")  
+        print("Level unchanged.")  
         return level, dex, con, int_stat, cha, str_stat, wis  
   
     points = abs(lv_diff) * 2  
-    sprint(f"You {'gain' if lv_diff > 0 else 'lose'} {points} stat points.")  
+    print(f"You {'gain' if lv_diff > 0 else 'lose'} {points} stat points.")  
   
     stats = {'dex': dex, 'con': con, 'int': int_stat, 'cha': cha, 'str': str_stat, 'wis': wis}  
   
     while points >= 0:  
-        sprint(f"Current stats: {stats}")  
+        print(f"Current stats: {stats}")  
         stat = input("Which stat? (dex, con, int, cha, str, wis): ").strip()  
         if stat not in stats:  
-            sprint("Invalid stat name.")  
+            print("Invalid stat name.")  
             continue  
         try:  
             change = int(input(f"How many points to {'add to' if lv_diff > 0 else 'remove from'} {stat}? (Remaining: {points}): "))  
         except ValueError:  
-            sprint("Invalid input.")  
+            print("Invalid input.")  
             continue  
         if change <= 0 or change > points:  
-            sprint("Invalid number of points.")  
+            print("Invalid number of points.")  
             continue  
         if lv_diff > 0:  #logic
             stats[stat] += change  
@@ -74,7 +69,7 @@ def edit_level(level, dex, con, int_stat, cha, str_stat, wis):
             stats[stat] -= change  
         points -= change  
   
-    sprint(f"Level updated to {new_level}. Stats: {stats}")  
+    print(f"Level updated to {new_level}. Stats: {stats}")  
     return new_level, stats['dex'], stats['con'], stats['int'], stats['cha'], stats['str'], stats['wis']  
 def edit_skills(current_skills, character_class, level):  
     available = set()  
@@ -83,15 +78,15 @@ def edit_skills(current_skills, character_class, level):
             available.update(skills)  
     to_add = available - current_skills  
     if not to_add:  
-        sprint("No new skills available to add.")  
+        print("No new skills available to add.")  
         return current_skills  
-    sprint("Available skills to add:", ", ".join(sorted(to_add)))  #Problem I think
+    print(f"Available skills to add: {', '.join(sorted(to_add))}")
     chosen = input("Enter one skill to add (or 'cancel' to skip): ").strip()  
     if chosen in to_add:  
         current_skills.add(chosen)  
-        sprint(f"Added {chosen}. Your skills: {current_skills}")  
+        print(f"Added {chosen}. Your skills: {current_skills}")  
     elif chosen == 'cancel':  
-        sprint("Skill addition cancelled.")  
+        print("Skill addition cancelled.")  
     else:  
-        sprint("Invalid choice.")  
+        print("Invalid choice.")  
     return current_skills  

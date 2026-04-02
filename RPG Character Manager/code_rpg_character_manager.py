@@ -9,12 +9,7 @@ from skills_lvs import edit_skills
 from skills_lvs import edit_level
 from perfun import choice
 import sys
-import time as t
-def sprint(text, delay=0.035):  
-    for char in text:  
-        sys.stdout.write(char)  
-        sys.stdout.flush()  
-        t.sleep(delay)
+import time as t 
         
 skills_library = {  
     "wizard": {  
@@ -77,7 +72,7 @@ equipment={
 }
 def main_menu():
     while True:
-        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare a character \n4: Search for a character \n5:Exit\n").strip():
+        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare a character \n4: Search for a character \n5: Exit\n").strip():
             case "1":
                 character_creator(races,classes,characters,skills_library)
             case "2":
@@ -89,12 +84,12 @@ def main_menu():
             case "5":
                 break
             case _:
-                sprint("not a input.")
+                print("not a input.")
 
 def ediding_menu():
     while True:
         if characters == {}:
-            sprint("no characters.")
+            print("no characters.")
             break
         else:
             while True:
@@ -103,7 +98,7 @@ def ediding_menu():
                 for text in characters.keys():
                     count += 1
                     new_character_list.append(text)
-                    sprint(f"{count}: {text}")
+                    print(f"{count}: {text}")
                 want = input("what character do you want?\n")
                 try:
                     characters[want]
@@ -117,8 +112,8 @@ def ediding_menu():
                             character = new_character_list[want]
                             break
                     except:
-                        sprint("not a character.")
-            match input("Do you want to (as a number).\n1:Edit Character Inventory \n2:Edit character Level \n3: Edit character Skills \n4: Exit\n").strip():
+                        print("not a character.")
+            match input("Do you want to (as a number).\n1: Edit Character Inventory \n2: Edit character Level \n3: Edit character Skills \n4: Exit\n").strip():
                 case "1":
                     choice(character)
                     pass
@@ -131,5 +126,5 @@ def ediding_menu():
                 case "4":
                     break
                 case _:
-                    sprint("not a input.")
+                    print("not a input.")
 main_menu()

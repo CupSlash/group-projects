@@ -3,12 +3,7 @@ import sys
 import time as t
 import math as m
 from skills_lvs import edit_skills
-def sprint(text, delay=0.025):  
-    for char in text:  
-        sys.stdout.write(char)  
-        sys.stdout.flush()  
-        t.sleep(delay)  
-    print() 
+
 def help_isint_input(text):
     while True:
         want = input(text)
@@ -83,5 +78,5 @@ def character_creator(races, classes ,characters = dict,skills = dict):
     for item in text:
         new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
     characters[character_name] = new_character
-    new_character["skills"] = edit_skills({},new_character["class"],new_character["level"])
+    new_character["skills"] = edit_skills(set(),new_character["class"],new_character["level"])
     return characters
