@@ -10,6 +10,7 @@ from skills_lvs import edit_level
 from perfun import choice
 import sys
 import time as t 
+from classes import *
         
 skills_library = {  
     "wizard": {  
@@ -22,7 +23,7 @@ skills_library = {
         20: {"wish"}  
     },  
     "rogue": {  
-        1: {"stealth", "thieves’ tools"},  
+        1: {"stealth", "thieves' tools"},  
         3: {"sneak attack"},  
         5: {"evasion"},  
         7: {"uncanny dodge"},  
@@ -72,7 +73,7 @@ equipment={
 }
 def main_menu():
     while True:
-        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare a character \n4: Search for a character \n5: Exit\n").strip():
+        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare a character \n4: Search for a character \n5: Display Character Stats \n6: Compare Characters \n7: Exit\n").strip():
             case "1":
                 character_creator(races,classes,characters,skills_library)
             case "2":
@@ -82,6 +83,39 @@ def main_menu():
             case "4":
                 search_char(characters)
             case "5":
+                character = {
+                    "name": "Test Character",
+                    "strength": 100,
+                    "dexterity": 80,
+                    "wisdom": 120,
+                    "charisma": 90,
+                    "intelligence": 110,
+                    "constitution": 95
+                }
+                visualization = DataVisualization()
+                visualization.display_character_stats(character)
+            case "6":
+                character1 = {
+                    "name": "Test Character 1",
+                    "strength": 100,
+                    "dexterity": 80,
+                    "wisdom": 120,
+                    "charisma": 90,
+                    "intelligence": 110,
+                    "constitution": 95
+                }
+                character2 = {
+                    "name": "Test Character 2",
+                    "strength": 90,
+                    "dexterity": 90,
+                    "wisdom": 110,
+                    "charisma": 100,
+                    "intelligence": 120,
+                    "constitution": 105
+                }
+                visualization = DataVisualization()
+                visualization.display_character_comparison(character1, character2)
+            case "7":
                 break
             case _:
                 print("not a input.")

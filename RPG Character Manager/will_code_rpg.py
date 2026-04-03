@@ -3,6 +3,7 @@ import sys
 import time as t
 import math as m
 from skills_lvs import edit_skills
+from classes import *
 
 def help_isint_input(text):
     while True:
@@ -66,6 +67,7 @@ def modifier_selector(text, modifer_list):
 def character_creator(races, classes ,characters = dict,skills = dict):
     character_name = input("What is the new character's name?\n")
     new_character = dict()
+    new_character["name"] = character_name
     new_character["race"] = modifier_selector("race",races)
     new_character["class"] = modifier_selector("class",classes)
     while True:
@@ -79,4 +81,8 @@ def character_creator(races, classes ,characters = dict,skills = dict):
         new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
     characters[character_name] = new_character
     new_character["skills"] = edit_skills(set(),new_character["class"],new_character["level"])
+    random_generator = RandomGenerator()
+    new_character["backstory"] = random_generator.create_backstory(character_name)
+    new_character["side_quest"] = random_generator.create_side_quest()
+    new_character["equipment"] = random_generator.create_equipment()
     return characters
