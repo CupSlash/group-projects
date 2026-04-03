@@ -65,13 +65,13 @@ def modifier_selector(text, modifer_list):
                 print("not an option.")
 
 def character_creator(races, classes ,characters = dict,skills = dict):
-    character_name = input("What is the new character's name?\n")
+    character_name = input("What is the new character's name? Or press r for random.\n")
     new_character = dict()
     new_character["name"] = character_name
     new_character["race"] = modifier_selector("race",races)
     new_character["class"] = modifier_selector("class",classes)
     while True:
-        new_character["level"] = m.floor(help_isint_input(f"What is {character_name}'s level (1-20)?\n"))
+        new_character["level"] = m.floor(help_isint_input(f"What is {character_name}'s level (1-20)? \n"))
         if new_character["level"] > 0 and new_character["level"] <= 20:
             break
         else:
