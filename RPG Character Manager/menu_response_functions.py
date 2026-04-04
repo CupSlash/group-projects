@@ -4,7 +4,7 @@ from skills_lvs import *
 from classes import *
 from perfun import *
 
-def handle_create_character(races, classes ,characters = dict,skills = dict):
+def handle_create_character(races, classes ,characters,skills = dict):
     random_generator = RandomGenerator()
     character_name = input("What is the new character's name? Or press r for random.\n")
     new_character = dict()
@@ -22,35 +22,26 @@ def handle_create_character(races, classes ,characters = dict,skills = dict):
     text = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
     for item in text:
         new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
-    characters[character_name] = new_character
     new_character["skills"] = edit_skills(set(),new_character["class"],new_character["level"])
     new_character["backstory"] = random_generator.create_backstory(character_name)
     new_character["side_quest"] = random_generator.create_side_quest()
     new_character["equipment"] = random_generator.create_equipment()
-    return characters
+    characters.append(new_character)
 
 def handle_edit_character(characters):
     while True:
-        if characters == {}:
+        if characters == []:
             print("no characters.")
             break
         else:
             while True:
-                new_character_list =print_numbered_characters(characters)
+                print_numbered_characters(characters)
                 want = input("what character do you want?\n")
-                try:
-                    characters[want]
-                    character = want
+                if want.isdigit() and int(want) > 0 and int(want) <= len(characters):
+                    character = characters[int(want)-1]
                     break
-                except:
-                    try:
-                        want = int(want)
-                        if want > 0:
-                            characters[new_character_list[want]]
-                            character = new_character_list[want]
-                            break
-                    except:
-                        print("not a character.")
+                else:
+                    print("Invalid input.")
             match input("Do you want to (as a number).\n1: Edit Character Inventory \n2: Edit character Level \n3: Edit character Skills \n4: Exit\n").strip():
                 case "1":
                     choice(character)
@@ -71,66 +62,51 @@ def handle_compare_characters(characters):
         print("Not enough characters to compare. Please create more characters first.")
         return None, None
     print_numbered_characters(characters)
-    character1 = input(f"Select your first character.\n")
-    while character1 not in characters:
-        print("Try again. That character doesn't exit yet. :")
-        character1 = input(f"Select your first character.\n")
+    character1_input = input(f"Select your first character.\n")
+    while character1_input.isdigit() == False or int(character1_input) <= 0 or int(character1_input) > len(characters):
+        print("Invalid input.")
+        character1_input = input(f"Select your first character.\n")
+    character1 = characters[int(character1_input)-1]
     print_numbered_characters(characters)       
-    character2 = input(f"Select your second character.\n")
-    while character2 not in characters:
-        print("Try again. That character doesn't exit yet. :")
-        character2 = input(f"Select your second character.\n")
+    character2_input = input(f"Select your second character.\n")
+    while character2_input.isdigit() == False or int(character2_input) <= 0 or int(character2_input) > len(characters):
+        print("Invalid input.")
+        character2_input = input(f"Select your second character.\n")
+    character2 = characters[int(character2_input)-1]
     visualization = DataVisualization()
     visualization.display_character_comparison(character1, character2)
 
 def handle_search_characters(characters):
-    stat_to_search_by = input("What stat would you like to search by, race, class, level, str, dex, cha, int, or name?\n").strip().lower()
+    stat_to_search_by = input("What stat would you like to search by, race, class, str, dex, cha, int, or name?\n").strip().lower()
     if stat_to_search_by == "race":
         search_race = input("What is their race?\n").strip()
-        print(f"{characters.get(search_race)}")
+        filtered_characters = filter(lambda char: char["race"] == search_race, characters)
     elif stat_to_search_by == "class":
         search_class= input("What is their class?\n").strip()
-        print(f"{characters.get(search_class)}")
-    elif stat_to_search_by == "level":
-        search_level_str= input("What is their level?\n").strip()
-        for i in range(20):
-            search_level_var == 0
-            if search_level_str == i:
-                search_level_var = i
-                print(f"{characters[search_level_var]}")
-                break
-            else:
-                search_level_var += 1
-            print("No characters found.")
+        filtered_characters = filter(lambda char: char["class"] == search_class, characters)
     elif stat_to_search_by == "str":
         search_str = input("What is their strength?\n").strip()
-        if (f"{characters[search_str]}") == False:
-            print("No characters found.")
-        else:
-            print(f"{characters[search_str]}")
+        filtered_characters = filter(lambda char: char["strength"] == int(search_str), characters)
     elif stat_to_search_by == "dex":
         search_dex = input("What is their dexterity?\n").strip()
-        if (f"{characters[{search_dex}]}") == False:
-            print("No characters found.")
-        else:
-            print(f"{characters[search_dex]}")
+        filtered_characters = filter(lambda char: char["dexterity"] == int(search_dex), characters)
     elif stat_to_search_by == "cha":
         search_cha = input("What is their charisma?\n").strip()
-        if (f"{characters[search_cha]}") == False:
-            print("No characters found.")
-        else:
-            print(f"{characters[search_cha]}")
+        filtered_characters = filter(lambda char: char["charisma"] == int(search_cha), characters)
     elif stat_to_search_by == "int":
         search_int = input("What is their intelligence?\n").strip()
-        if (f"{characters[search_int]}") == False:
-            print("No characters found.")
-        else:
-            print(f"{characters[search_int]}")
+        filtered_characters = filter(lambda char: char["intelligence"] == int(search_int), characters)
     elif stat_to_search_by == "name":
         search_name = input("What is their name?\n").strip()
-        print(f"{characters.get(search_name)}")
+        filtered_characters = filter(lambda char: char["name"] == search_name, characters)
     else:
          print("That isn't a stat.")
+
+    if (filtered_characters and len(list(filtered_characters)) > 0):
+        for character in filtered_characters:
+            print(f"{character['name']}\n")
+    else:
+        print("No characters found.")
 
 def handle_display_character_stats():
     character = {
@@ -204,10 +180,5 @@ def modifier_selector(text, modifer_list):
                 print("not an option.")
 
 def print_numbered_characters(characters):
-    count = 0
-    new_character_list = []
-    for text in characters.keys():
-        count += 1
-        new_character_list.append(text)
-        print(f"{count}: {text}")
-    return new_character_list
+    for i, character in enumerate(characters):
+        print(f"{i+1}: {character['name']}")

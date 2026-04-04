@@ -40,7 +40,7 @@ skills_library = {
     }  
 }  
 
-characters = dict()
+characters = []
 
 races = {
     "Human": (1,1,1,1,1,1),

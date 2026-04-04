@@ -15,7 +15,6 @@ equipment={
     "armour":'',
 }
 
-character={'class':'wizard'}
 cls="wizard"
 #tuples
 if cls=="wizard":
