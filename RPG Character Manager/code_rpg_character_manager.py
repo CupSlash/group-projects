@@ -1,44 +1,6 @@
 # WH, SW, JQ, BH 2nd
-#Matplotlib
-#Pandas
-#Faker
-from skills_lvs import edit_skills
-from skills_lvs import edit_level
-from perfun import choice
-import sys
-import time as t 
 from classes import *
 from menu_response_functions import *
-        
-skills_library = {  
-    "wizard": {  
-        1: {"arcana", "spellcasting"},  
-        3: {"ritual casting"},  
-        5: {"fireball"},  
-        7: {"counterspell"},  
-        10: {"teleport"},  
-        15: {"meteor swarm"},  
-        20: {"wish"}  
-    },  
-    "rogue": {  
-        1: {"stealth", "thieves' tools"},  
-        3: {"sneak attack"},  
-        5: {"evasion"},  
-        7: {"uncanny dodge"},  
-        10: {"blindsense"},  
-        15: {"slippery mind"},  
-        20: {"stroke of luck"}  
-    },  
-    "fighter": {  
-        1: {"athletics", "second wind"},  
-        3: {"action surge"},  
-        5: {"extra attack"},  
-        7: {"indomitable"},  
-        10: {"leadership"},  
-        15: {"survivor"},  
-        20: {"champion"}  
-    }  
-}  
 
 characters = []
 
@@ -54,26 +16,11 @@ classes = {
     "fighter": (1,1,1,1,1,1),
 }
 
-weapons={ #weapons that character has
-
-}
-inventory={ #items that player has
-
-}
-spells={ #spells and their descriptions
-
-}
-
-equipment={
-    "hand_1":'',
-    "hand_2":'',
-    "armour":'',
-}
 def main_menu():
     while True:
         match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare characters \n4: Search for a character \n5: Display Character Stats \n6: Compare Characters \n7: Exit\n").strip():
             case "1":
-                handle_create_character(races,classes,characters,skills_library)
+                handle_create_character(races,classes,characters)
             case "2":
                 handle_edit_character(characters)
             case "3":
