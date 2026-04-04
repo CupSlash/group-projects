@@ -38,10 +38,11 @@ class RandomGenerator:
         return self.faker.name()
     def create_backstory(self, name):
         trait = self.create_personality_trait()
-        gender = self.faker.person.gender()
+        gender = random.choice(["male", "female"])
         age = self.faker.random_int(min=15, max=70)
         profession = self.faker.job()
-        hobby = self.faker.hobby()
+        hobbies = ["cooking", "hiking", "drawing", "writing", "playing music", "coding"]
+        hobby = random.choice(hobbies)
         events = [
             "befriending a whale and traveling the seas together",
             "seeing a social media influencer and deciding to become one themselves",
