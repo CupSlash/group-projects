@@ -71,7 +71,7 @@ equipment={
 }
 def main_menu():
     while True:
-        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare a character \n4: Search for a character \n5: Display Character Stats \n6: Compare Characters \n7: Exit\n").strip():
+        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare characters \n4: Search for a character \n5: Display Character Stats \n6: Compare Characters \n7: Exit\n").strip():
             case "1":
                 handle_create_character(races,classes,characters,skills_library)
             case "2":
@@ -81,7 +81,7 @@ def main_menu():
             case "4":
                 handle_search_characters(characters)
             case "5":
-                handle_display_character_stats()
+                handle_display_character_stats(characters)
             case "6":
                 pass
             case "7":

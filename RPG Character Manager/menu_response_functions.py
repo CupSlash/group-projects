@@ -34,14 +34,7 @@ def handle_edit_character(characters):
             print("no characters.")
             break
         else:
-            while True:
-                print_numbered_characters(characters)
-                want = input("what character do you want?\n")
-                if want.isdigit() and int(want) > 0 and int(want) <= len(characters):
-                    character = characters[int(want)-1]
-                    break
-                else:
-                    print("Invalid input.")
+            character = select_a_character(characters, "Select a character to edit.\n")
             match input("Do you want to (as a number).\n1: Edit Character Inventory \n2: Edit character Level \n3: Edit character Skills \n4: Exit\n").strip():
                 case "1":
                     choice(character)
@@ -62,17 +55,9 @@ def handle_compare_characters(characters):
         print("Not enough characters to compare. Please create more characters first.")
         return None, None
     print_numbered_characters(characters)
-    character1_input = input(f"Select your first character.\n")
-    while character1_input.isdigit() == False or int(character1_input) <= 0 or int(character1_input) > len(characters):
-        print("Invalid input.")
-        character1_input = input(f"Select your first character.\n")
-    character1 = characters[int(character1_input)-1]
+    character1 = select_a_character(characters, "Select your first character.\n")
     print_numbered_characters(characters)       
-    character2_input = input(f"Select your second character.\n")
-    while character2_input.isdigit() == False or int(character2_input) <= 0 or int(character2_input) > len(characters):
-        print("Invalid input.")
-        character2_input = input(f"Select your second character.\n")
-    character2 = characters[int(character2_input)-1]
+    character2 = select_a_character(characters, "Select your second character.\n")
     visualization = DataVisualization()
     visualization.display_character_comparison(character1, character2)
 
@@ -108,16 +93,11 @@ def handle_search_characters(characters):
     else:
         print("No characters found.")
 
-def handle_display_character_stats():
-    character = {
-        "name": "Test Character",
-        "strength": 100,
-        "dexterity": 80,
-        "wisdom": 120,
-        "charisma": 90,
-        "intelligence": 110,
-        "constitution": 95
-    }
+def handle_display_character_stats(characters):
+    if len(characters) == 0:
+        print("No characters to display. Please create a character first.")
+        return
+    character = select_a_character(characters, "Select a character to display its stats.\n")
     visualization = DataVisualization()
     visualization.display_character_stats(character)
 
@@ -178,6 +158,15 @@ def modifier_selector(text, modifer_list):
                 break
             else:
                 print("not an option.")
+
+def select_a_character(characters, prompt):
+    while True:
+        print_numbered_characters(characters)
+        selected_character_input = input(prompt)
+        if selected_character_input.isdigit() and int(selected_character_input) > 0 and int(selected_character_input) <= len(characters):
+            return characters[int(selected_character_input)-1]
+        else:
+            print("Invalid input.")
 
 def print_numbered_characters(characters):
     for i, character in enumerate(characters):
