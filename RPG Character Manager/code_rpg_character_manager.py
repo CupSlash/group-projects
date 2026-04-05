@@ -18,7 +18,7 @@ classes = {
 
 def main_menu():
     while True:
-        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare characters \n4: Search for a character \n5: Display Character Stats \n6: Compare Characters \n7: Exit\n").strip():
+        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare characters \n4: Search for a character \n5: Display Character Stats \n6: Display Character Progression \n7: View Statistical Analysis \n8. Exit\n").strip():
             case "1":
                 handle_create_character(races,classes,characters)
             case "2":
@@ -30,8 +30,10 @@ def main_menu():
             case "5":
                 handle_display_character_stats(characters)
             case "6":
-                pass
+                handle_display_character_progression(characters)
             case "7":
+                handle_statistical_analysis(characters)
+            case "8":
                 break
             case _:
                 print("not a input.")

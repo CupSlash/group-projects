@@ -32,31 +32,31 @@ skills_library = {
     }  
 }  
 
-def edit_level(level, dex, con, int_stat, cha, str_stat, wis):  
+def edit_level(character):  
     try:  
         new_level = int(input("Enter your new level: "))  
     except ValueError:  
-        print("Invalid input.")  
-        return level, dex, con, int_stat, cha, str_stat, wis  
-  
-    lv_diff = new_level - level  
+        print("Invalid input.")
+        return
+    lv_diff = new_level - character["level"]  
     if lv_diff == 0:  
         print("Level unchanged.")  
-        return level, dex, con, int_stat, cha, str_stat, wis  
-  
+        return
+    character["level_history"].append(character["level"])
+    character["level"] = new_level
+    for attribute in ["dexterity", "constitution", "intelligence", "charisma", "strength", "wisdom"]:
+        character[f"{attribute}_history"].append(character[attribute])
     points = abs(lv_diff) * 2  
     print(f"You {'gain' if lv_diff > 0 else 'lose'} {points} stat points.")  
-  
-    stats = {'dex': dex, 'con': con, 'int': int_stat, 'cha': cha, 'str': str_stat, 'wis': wis}  
-  
-    while points >= 0:  
-        print(f"Current stats: {stats}")  
-        stat = input("Which stat? (dex, con, int, cha, str, wis): ").strip()  
-        if stat not in stats:  
-            print("Invalid stat name.")  
-            continue  
+
+    while points > 0:  
+        print(f"Current attributes: dexterity={character['dexterity']}, constitution={character['constitution']}, intelligence={character['intelligence']}, charisma={character['charisma']}, strength={character['strength']}, wisdom={character['wisdom']}")  
+        attribute = input("Which attribute would you like to modify with points? (dexterity, constitution, intelligence, charisma, strength, wisdom): ").strip()  
+        if attribute not in ["dexterity", "constitution", "intelligence", "charisma", "strength", "wisdom"]:  
+            print("Invalid attribute name.")  
+            continue
         try:  
-            change = int(input(f"How many points to {'add to' if lv_diff > 0 else 'remove from'} {stat}? (Remaining: {points}): "))  
+            change = int(input(f"How many points would you like to {'add to' if lv_diff > 0 else 'remove from'} {attribute}? (Remaining: {points}): "))  
         except ValueError:  
             print("Invalid input.")  
             continue  
@@ -64,13 +64,12 @@ def edit_level(level, dex, con, int_stat, cha, str_stat, wis):
             print("Invalid number of points.")  
             continue  
         if lv_diff > 0:  #logic
-            stats[stat] += change  
+            character[attribute] += change  
         else:  
-            stats[stat] -= change  
+            character[attribute] -= change  
         points -= change  
-  
-    print(f"Level updated to {new_level}. Stats: {stats}")  
-    return new_level, stats['dex'], stats['con'], stats['int'], stats['cha'], stats['str'], stats['wis']  
+    
+    print(f"Level updated to {new_level}. Attributes: dexterity={character['dexterity']}, constitution={character['constitution']}, intelligence={character['intelligence']}, charisma={character['charisma']}, strength={character['strength']}, wisdom={character['wisdom']}")  
 def edit_skills(current_skills, character_class, level):  
     available = set()  
     for lv, skills in skills_library[character_class].items():  

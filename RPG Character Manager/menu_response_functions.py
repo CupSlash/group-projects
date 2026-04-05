@@ -19,13 +19,15 @@ def handle_create_character(races, classes ,characters,skills = dict):
             break
         else:
             print("Too big or small.")
-    text = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
-    for item in text:
-        new_character[item] = help_isint_input(f"What is {character_name}'s {item}?\n")
+    attributes = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
+    for attribute in attributes:
+        new_character[attribute] = help_isint_input(f"What is {character_name}'s {attribute}?\n")
+        new_character[f"{attribute}_history"] = []
     new_character["skills"] = edit_skills(set(),new_character["class"],new_character["level"])
     new_character["backstory"] = random_generator.create_backstory(character_name)
     new_character["side_quest"] = random_generator.create_side_quest()
     new_character["equipment"] = random_generator.create_equipment()
+    new_character["level_history"] = []
     characters.append(new_character)
 
 def handle_edit_character(characters):
@@ -38,13 +40,13 @@ def handle_edit_character(characters):
             match input("Do you want to (as a number).\n1: Edit Character Inventory \n2: Edit character Level \n3: Edit character Skills \n4: Exit\n").strip():
                 case "1":
                     choice(character)
-                    pass
+                    break
                 case "2":
-                    edit_level(character["level"],character["dexterity"],character["constitution"],character["intelligence"],character["charisma"],character["strength"],character["wisdom"])
-                    pass
+                    edit_level(character)
+                    break
                 case "3":
                     edit_skills(character["current_skills"],character["class"],character["level"])
-                    pass
+                    break
                 case "4":
                     break
                 case _:
@@ -101,6 +103,31 @@ def handle_display_character_stats(characters):
     visualization = DataVisualization()
     visualization.display_character_stats(character)
 
+def handle_display_character_progression(characters):
+    if len(characters) == 0:
+        print("No characters to display. Please create a character first.")
+        return
+    character = select_a_character(characters, "Select a character to display its progression.\n")
+    visualization = DataVisualization()
+    visualization.display_character_progression(character)
+
+def handle_statistical_analysis(characters):
+    if len(characters) == 0:
+        print("No characters to analyze. Please create a character first.")
+        return
+    analyzer = StatisticalAnalyzer()
+    statistics = analyzer.calculate_statistics(characters)
+    for key, value in statistics.items():
+        print(f"{key}: mean={round(value['mean'], 2)}, median={value['median']}, max={value['max']}, min={value['min']}")
+        
+def handle_level_up_character(characters):
+    if len(characters) == 0:
+        print("No characters to level up. Please create a character first.")
+        return
+    selected_character = select_a_character(characters, "Select a character to level up.\n")
+    # edit_level(selected_character["level"],selected_character["dexterity"],selected_character["constitution"],selected_character["intelligence"],selected_character["charisma"],selected_character["strength"],selected_character["wisdom"])
+    # edit_skills(selected_character["current_skills"],selected_character["class"],selected_character["level"])
+
 def help_isint_input(text):
     while True:
         want = input(text)
@@ -111,6 +138,7 @@ def help_isint_input(text):
                 return float(want)
             except:
                 print("Not a number.")
+
 def modifier_selector(text, modifer_list):
     while True:
 
