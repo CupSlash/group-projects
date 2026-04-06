@@ -13,7 +13,7 @@ skills_library = {
         20: {"wish"}  
     },  
     "rogue": {  
-        1: {"stealth", "thieves’ tools"},  
+        1: {"stealth", "thieves' tools"},  
         3: {"sneak attack"},  
         5: {"evasion"},  
         7: {"uncanny dodge"},  

@@ -1,5 +1,7 @@
 #BH 2nd menu_response_functions.py
 import math as m
+
+from numpy import character
 from skills_lvs import *
 from classes import *
 from perfun import *
@@ -19,15 +21,13 @@ def handle_create_character(races, classes ,characters,skills = dict):
             break
         else:
             print("Too big or small.")
-    attributes = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
-    for attribute in attributes:
-        new_character[attribute] = help_isint_input(f"What is {character_name}'s {attribute}?\n")
-        new_character[f"{attribute}_history"] = []
+    add_attributes(new_character, character_name)
     new_character["skills"] = edit_skills(set(),new_character["class"],new_character["level"])
     new_character["backstory"] = random_generator.create_backstory(character_name)
     new_character["side_quest"] = random_generator.create_side_quest()
     new_character["equipment"] = random_generator.create_equipment()
     new_character["level_history"] = []
+    print(f"{new_character['backstory']}\nSide quest: {new_character['side_quest']}\nEquipment:{new_character['equipment']}")
     characters.append(new_character)
 
 def handle_edit_character(characters):
@@ -45,7 +45,7 @@ def handle_edit_character(characters):
                     edit_level(character)
                     break
                 case "3":
-                    edit_skills(character["current_skills"],character["class"],character["level"])
+                    edit_skills(character["skills"],character["class"],character["level"])
                     break
                 case "4":
                     break
@@ -56,34 +56,55 @@ def handle_compare_characters(characters):
     if len(characters) < 2:
         print("Not enough characters to compare. Please create more characters first.")
         return None, None
-    print_numbered_characters(characters)
     character1 = select_a_character(characters, "Select your first character.\n")
-    print_numbered_characters(characters)       
     character2 = select_a_character(characters, "Select your second character.\n")
     visualization = DataVisualization()
     visualization.display_character_comparison(character1, character2)
 
-def handle_search_characters(characters):
-    stat_to_search_by = input("What stat would you like to search by, race, class, str, dex, cha, int, or name?\n").strip().lower()
-    if stat_to_search_by == "race":
+def handle_view_characters(characters):
+    if len(characters) == 0:
+        print("No characters to view. Please create a character first.")
+        return
+    choice = input("Do you want to (as a number).\n1: View all characters \n2: Filter characters \n3: Sort characters \n4: Exit\n").strip()
+    if choice == "1":
+        for character in characters:
+            print(f"Name: {character['name']}, Class: {character['class']}, Race: {character['race']}, Strength: {character['strength']}, Dexterity: {character['dexterity']}, Wisdom: {character['wisdom']}, Charisma: {character['charisma']}, Intelligence: {character['intelligence']}, Constitution: {character['constitution']}")
+    elif choice == "2":
+        handle_filter_characters(characters)
+    elif choice == "3":
+        handle_sort_characters(characters)
+    elif choice == "4":
+        return
+    else:
+        print("Not a choice.")
+
+def handle_filter_characters(characters):
+    stat_to_filter_by = input("What stat would you like to filter by: race, class, str, dex, wis, cha, int, con, or name?\n").strip().lower()
+    if stat_to_filter_by == "race":
         search_race = input("What is their race?\n").strip()
         filtered_characters = filter(lambda char: char["race"] == search_race, characters)
-    elif stat_to_search_by == "class":
+    elif stat_to_filter_by == "class":
         search_class= input("What is their class?\n").strip()
         filtered_characters = filter(lambda char: char["class"] == search_class, characters)
-    elif stat_to_search_by == "str":
+    elif stat_to_filter_by == "str":
         search_str = input("What is their strength?\n").strip()
         filtered_characters = filter(lambda char: char["strength"] == int(search_str), characters)
-    elif stat_to_search_by == "dex":
+    elif stat_to_filter_by == "dex":
         search_dex = input("What is their dexterity?\n").strip()
         filtered_characters = filter(lambda char: char["dexterity"] == int(search_dex), characters)
-    elif stat_to_search_by == "cha":
+    elif stat_to_filter_by == "wis":
+        search_wis = input("What is their wisdom?\n").strip()
+        filtered_characters = filter(lambda char: char["wisdom"] == int(search_wis), characters)
+    elif stat_to_filter_by == "cha":
         search_cha = input("What is their charisma?\n").strip()
         filtered_characters = filter(lambda char: char["charisma"] == int(search_cha), characters)
-    elif stat_to_search_by == "int":
+    elif stat_to_filter_by == "int":
         search_int = input("What is their intelligence?\n").strip()
         filtered_characters = filter(lambda char: char["intelligence"] == int(search_int), characters)
-    elif stat_to_search_by == "name":
+    elif stat_to_filter_by == "con":
+        search_con = input("What is their constitution?\n").strip()
+        filtered_characters = filter(lambda char: char["constitution"] == int(search_con), characters)
+    elif stat_to_filter_by == "name":
         search_name = input("What is their name?\n").strip()
         filtered_characters = filter(lambda char: char["name"] == search_name, characters)
     else:
@@ -91,9 +112,18 @@ def handle_search_characters(characters):
 
     if (filtered_characters and len(list(filtered_characters)) > 0):
         for character in filtered_characters:
-            print(f"{character['name']}\n")
+            print(f"Name: {character['name']}, Class: {character['class']}, Race: {character['race']}, Strength: {character['strength']}, Dexterity: {character['dexterity']}, Wisdom: {character['wisdom']}, Charisma: {character['charisma']}, Intelligence: {character['intelligence']}, Constitution: {character['constitution']}")
     else:
         print("No characters found.")
+
+def handle_sort_characters(characters):
+    stat_to_sort_by = input("What stat would you like to sort by: race, class, strength, dexterity, wisdom, charisma, intelligence, constitution, or name?\n").strip().lower()
+    if stat_to_sort_by not in ["race", "class", "strength", "dexterity", "wisdom", "charisma", "intelligence", "constitution", "name"]:
+        print("That isn't a stat.")
+        return
+    sorted_characters = sorted(characters, key=lambda char: char[stat_to_sort_by])
+    for character in sorted_characters:
+        print(f"Name: {character['name']}, Class: {character['class']}, Race: {character['race']}, Strength: {character['strength']}, Dexterity: {character['dexterity']}, Wisdom: {character['wisdom']}, Charisma: {character['charisma']}, Intelligence: {character['intelligence']}, Constitution: {character['constitution']}")
 
 def handle_display_character_stats(characters):
     if len(characters) == 0:
@@ -120,14 +150,6 @@ def handle_statistical_analysis(characters):
     for key, value in statistics.items():
         print(f"{key}: mean={round(value['mean'], 2)}, median={value['median']}, max={value['max']}, min={value['min']}")
         
-def handle_level_up_character(characters):
-    if len(characters) == 0:
-        print("No characters to level up. Please create a character first.")
-        return
-    selected_character = select_a_character(characters, "Select a character to level up.\n")
-    # edit_level(selected_character["level"],selected_character["dexterity"],selected_character["constitution"],selected_character["intelligence"],selected_character["charisma"],selected_character["strength"],selected_character["wisdom"])
-    # edit_skills(selected_character["current_skills"],selected_character["class"],selected_character["level"])
-
 def help_isint_input(text):
     while True:
         want = input(text)
@@ -168,24 +190,66 @@ def modifier_selector(text, modifer_list):
 
                 except:
                     print("Not an option.")
-        stats = modifer_list[class_race]
-        stats_text = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
-        print("Do you want:")
-        for item in range(6):
-            c_stat = stats[item]
-            c_text = stats_text[item]
-            if c_stat > 0:
-                print(f"+{c_stat}: {c_text}")
-            else:
-                print(f"{c_stat}: {c_text}")
-        while True:
-            want = input("(1: yes/ 2: no)\n").strip()
-            if want == "1" or want == "yes":
-                return class_race
-            elif want == "2" or want == "no":
-                break
-            else:
-                print("not an option.")
+        return class_race
+
+def add_attributes(new_character, character_name):
+    attributes = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
+    choice = input("Which attribute template would you like to use?\n 1. Medic\n 2. Heavy \n 3. Long-range \n 4. Scientist \n 5. Rizzler \n 6. Balanced \n 7. Custom\n")
+    if choice == "1":
+        new_character["strength"] = 8
+        new_character["dexterity"] = 10
+        new_character["wisdom"] = 13
+        new_character["charisma"] = 16
+        new_character["intelligence"] = 15
+        new_character["constitution"] = 38
+    elif choice == "2":
+        new_character["strength"] = 40
+        new_character["dexterity"] = 9
+        new_character["wisdom"] = 4
+        new_character["charisma"] = 10
+        new_character["intelligence"] = 3
+        new_character["constitution"] = 30
+    elif choice == "3":
+        new_character["strength"] = 10
+        new_character["dexterity"] = 40
+        new_character["wisdom"] = 15
+        new_character["charisma"] = 0
+        new_character["intelligence"] = 20
+        new_character["constitution"] = 5
+    elif choice == "4":
+        new_character["strength"] = 3
+        new_character["dexterity"] = 10
+        new_character["wisdom"] = 20
+        new_character["charisma"] = 3
+        new_character["intelligence"] = 40
+        new_character["constitution"] = 6
+    elif choice == "5":
+        new_character["strength"] = 4
+        new_character["dexterity"] = 19
+        new_character["wisdom"] = 3
+        new_character["charisma"] = 41
+        new_character["intelligence"] = 4
+        new_character["constitution"] = 12
+    elif choice == "6":
+        new_character["strength"] = 15
+        new_character["dexterity"] = 15
+        new_character["wisdom"] = 15
+        new_character["charisma"] = 15
+        new_character["intelligence"] = 15
+        new_character["constitution"] = 15
+    elif choice == "7":
+        for attribute in attributes:
+            new_character[attribute] = help_isint_input(f"What is {character_name}'s {attribute}?\n")
+    else:
+        print("Not a choice. Defaulting to balanced.")
+        new_character["strength"] = 15
+        new_character["dexterity"] = 15
+        new_character["wisdom"] = 15
+        new_character["charisma"] = 15
+        new_character["intelligence"] = 15
+        new_character["constitution"] = 15
+    for attribute in attributes:
+        new_character[f"{attribute}_history"] = []
 
 def select_a_character(characters, prompt):
     while True:

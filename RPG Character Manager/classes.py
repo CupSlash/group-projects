@@ -9,30 +9,30 @@ class DataVisualization:
         self.attributes = ["Strength", "Dexterity", "Wisdom", "Charisma", "Intelligence", "Constitution"]
     def display_character_stats(self, character):
         levels = [character["strength"], character["dexterity"], character["wisdom"], character["charisma"], character["intelligence"], character["constitution"]]
-        
         plt.bar(self.attributes, levels)
         plt.xlabel("Attributes")
         plt.ylabel("Level")
         plt.title(f"{character['name']}'s Stats")
         plt.show()
+    def display_character_comparison(self, character1, character2):
+        levels1 = [character1["strength"], character1["dexterity"], character1["wisdom"], character1["charisma"], character1["intelligence"], character1["constitution"]]
+        levels2 = [character2["strength"], character2["dexterity"], character2["wisdom"], character2["charisma"], character2["intelligence"], character2["constitution"]]
+        x = range(len(self.attributes))
+        plt.bar(x, levels1, width=0.4, label=character1['name'], align='center')
+        plt.bar(x, levels2, width=0.4, label=character2['name'], align='edge')
+        plt.xlabel("Attributes")
+        plt.ylabel("Level")
+        plt.title(f"Comparison of {character1['name']} and {character2['name']}")
+        plt.xticks(x, self.attributes)
+        plt.legend()
+        plt.show()
     def display_character_progression(self, character):
-        # months = np.arange(1, 13)
-        # sales_data = {
-        #     'California': np.random.randint(50, 150, size=12),
-        #     'Texas': np.random.randint(40, 130, size=12),
-        #     'New York': np.random.randint(30, 120, size=12)
-        # }
-
-        # plt.figure(figsize=(10, 6))
         x_values = range(len(character["level_history"]) + 1)
         y_values = character["level_history"] + [character["level"]]
         plt.plot(x_values, y_values, label="Level")
         for attribute in self.attributes:
             y_values = character[f"{attribute.lower()}_history"] + [character[attribute.lower()]]
             plt.plot(x_values, y_values, label=attribute)
-        # for attribute in self.attributes:
-        
-
         plt.title("Character Progression")
         plt.xlabel("Time")
         plt.ylabel("Value")
