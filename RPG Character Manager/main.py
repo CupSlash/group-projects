@@ -1,9 +1,10 @@
 # WH, SW, JQ, BH 2nd
+#imports
 from classes import *
 from menu_response_functions import *
-
+#charcters list, where all characters are stored
 characters = []
-
+#races and classes setup
 races = {
     "Human": (1,1,1,1,1,1),
     "Aquatic": (1,2,5,6,3,1),
@@ -15,10 +16,10 @@ classes = {
     "rogue": (1,1,1,1,1,1),
     "fighter": (1,1,1,1,1,1),
 }
-
+#MAIN MENU
 def main_menu():
     while True:
-        match input("Do you want to (as a number).\n1: Make a character \n2: Edit a character \n3: Compare characters \n4: View characters \n5: Display Character Stats \n6: Display Character Progression \n7: View Statistical Analysis \n8.  \n9. Exit\n").strip():
+        match input("Do you want to (as a number).\n1: Create a character \n2: Edit a character \n3: Compare characters \n4: View characters \n5: Attribute display \n6. Exit\n").strip():
             case "1":
                 handle_create_character(races,classes,characters)
             case "2":
@@ -28,15 +29,9 @@ def main_menu():
             case "4":
                 handle_view_characters(characters)
             case "5":
-                handle_display_character_stats(characters)
+                handle_attribute_display(characters)
             case "6":
-                handle_display_character_progression(characters)
-            case "7":
-                handle_statistical_analysis(characters)
-            case "8":
-                pass
-            case "9":
                 break
             case _:
-                print("not a input.")
+                print("Not an input.")
 main_menu()

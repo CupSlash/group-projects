@@ -1,7 +1,8 @@
-
+#JQ, WH, BH, SW 2nd skills and levels file
+#Imports
 import sys
 import time as t
-
+#Library with skills for each class and the levels they are unlocked at
 skills_library = {  
     "wizard": {  
         1: {"arcana", "spellcasting"},  
@@ -31,7 +32,7 @@ skills_library = {
         20: {"champion"}  
     }  
 }  
-
+#Edit level function
 def edit_level(character):  
     try:  
         new_level = int(input("Enter your new level: "))  
@@ -48,7 +49,6 @@ def edit_level(character):
         character[f"{attribute}_history"].append(character[attribute])
     points = abs(lv_diff) * 2  
     print(f"You {'gain' if lv_diff > 0 else 'lose'} {points} stat points.")  
-
     while points > 0:  
         print(f"Current attributes: dexterity={character['dexterity']}, constitution={character['constitution']}, intelligence={character['intelligence']}, charisma={character['charisma']}, strength={character['strength']}, wisdom={character['wisdom']}")  
         attribute = input("Which attribute would you like to modify with points? (dexterity, constitution, intelligence, charisma, strength, wisdom): ").strip()  
@@ -68,8 +68,8 @@ def edit_level(character):
         else:  
             character[attribute] -= change  
         points -= change  
-    
     print(f"Level updated to {new_level}. Attributes: dexterity={character['dexterity']}, constitution={character['constitution']}, intelligence={character['intelligence']}, charisma={character['charisma']}, strength={character['strength']}, wisdom={character['wisdom']}")  
+#Edit skills function
 def edit_skills(current_skills, character_class, level):  
     available = set()  
     for lv, skills in skills_library[character_class].items():  

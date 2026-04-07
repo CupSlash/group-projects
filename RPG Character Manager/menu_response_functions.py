@@ -1,11 +1,9 @@
-#BH 2nd menu_response_functions.py
+#JQ, WH, BH, SW 2nd menu_response_functions.py
 import math as m
-
-from numpy import character
-from skills_lvs import *
+from skills_lvls import *
 from classes import *
 from perfun import *
-
+#create character function
 def handle_create_character(races, classes ,characters,skills = dict):
     random_generator = RandomGenerator()
     character_name = input("What is the new character's name? Or press r for random.\n")
@@ -29,7 +27,7 @@ def handle_create_character(races, classes ,characters,skills = dict):
     new_character["level_history"] = []
     print(f"{new_character['backstory']}\nSide quest: {new_character['side_quest']}\nEquipment:{new_character['equipment']}")
     characters.append(new_character)
-
+#edit character function
 def handle_edit_character(characters):
     while True:
         if characters == []:
@@ -37,9 +35,9 @@ def handle_edit_character(characters):
             break
         else:
             character = select_a_character(characters, "Select a character to edit.\n")
-            match input("Do you want to (as a number).\n1: Edit Character Inventory \n2: Edit character Level \n3: Edit character Skills \n4: Exit\n").strip():
+            match input("Do you want to (as a number).\n1: Edit Character Inventory \n2: Edit Character Level \n3: Edit Character Skills \n4: Exit\n").strip():
                 case "1":
-                    choice(character)
+                    edit_person(character)
                     break
                 case "2":
                     edit_level(character)
@@ -51,7 +49,7 @@ def handle_edit_character(characters):
                     break
                 case _:
                     print("not a input.")
-
+#compare characters function
 def handle_compare_characters(characters):
     if len(characters) < 2:
         print("Not enough characters to compare. Please create more characters first.")
@@ -60,7 +58,7 @@ def handle_compare_characters(characters):
     character2 = select_a_character(characters, "Select your second character.\n")
     visualization = DataVisualization()
     visualization.display_character_comparison(character1, character2)
-
+#view characters function
 def handle_view_characters(characters):
     if len(characters) == 0:
         print("No characters to view. Please create a character first.")
@@ -77,7 +75,7 @@ def handle_view_characters(characters):
         return
     else:
         print("Not a choice.")
-
+#filter characters function (used in view characters)
 def handle_filter_characters(characters):
     stat_to_filter_by = input("What stat would you like to filter by: race, class, str, dex, wis, cha, int, con, or name?\n").strip().lower()
     if stat_to_filter_by == "race":
@@ -115,7 +113,7 @@ def handle_filter_characters(characters):
             print(f"Name: {character['name']}, Class: {character['class']}, Race: {character['race']}, Strength: {character['strength']}, Dexterity: {character['dexterity']}, Wisdom: {character['wisdom']}, Charisma: {character['charisma']}, Intelligence: {character['intelligence']}, Constitution: {character['constitution']}")
     else:
         print("No characters found.")
-
+#sort characters function (used in view characters)
 def handle_sort_characters(characters):
     stat_to_sort_by = input("What stat would you like to sort by: race, class, strength, dexterity, wisdom, charisma, intelligence, constitution, or name?\n").strip().lower()
     if stat_to_sort_by not in ["race", "class", "strength", "dexterity", "wisdom", "charisma", "intelligence", "constitution", "name"]:
@@ -124,32 +122,37 @@ def handle_sort_characters(characters):
     sorted_characters = sorted(characters, key=lambda char: char[stat_to_sort_by])
     for character in sorted_characters:
         print(f"Name: {character['name']}, Class: {character['class']}, Race: {character['race']}, Strength: {character['strength']}, Dexterity: {character['dexterity']}, Wisdom: {character['wisdom']}, Charisma: {character['charisma']}, Intelligence: {character['intelligence']}, Constitution: {character['constitution']}")
-
-def handle_display_character_stats(characters):
+#attribute display function
+def handle_attribute_display(characters):
     if len(characters) == 0:
         print("No characters to display. Please create a character first.")
         return
+    choice = input("Do you want to (as a number). \n1. Display a character's stats \n2. Display a character's progression \n3. View statistical analysis of characters \n4. Exit\n").strip()
+    if choice == "1":
+        handle_display_character_stats(characters)
+    elif choice == "2":
+        handle_display_character_progression(characters)
+    elif choice == "3":
+        handle_statistical_analysis(characters)
+    elif choice == "4":
+        return
+#display character stats function (used in attribute display)
+def handle_display_character_stats(characters):
     character = select_a_character(characters, "Select a character to display its stats.\n")
     visualization = DataVisualization()
     visualization.display_character_stats(character)
-
+#display character progression function (used in attribute display)
 def handle_display_character_progression(characters):
-    if len(characters) == 0:
-        print("No characters to display. Please create a character first.")
-        return
     character = select_a_character(characters, "Select a character to display its progression.\n")
     visualization = DataVisualization()
     visualization.display_character_progression(character)
-
+#statistical analysis function (used in attribute display)
 def handle_statistical_analysis(characters):
-    if len(characters) == 0:
-        print("No characters to analyze. Please create a character first.")
-        return
     analyzer = StatisticalAnalyzer()
     statistics = analyzer.calculate_statistics(characters)
     for key, value in statistics.items():
         print(f"{key}: mean={round(value['mean'], 2)}, median={value['median']}, max={value['max']}, min={value['min']}")
-        
+#help_isint_input function
 def help_isint_input(text):
     while True:
         want = input(text)
@@ -160,7 +163,7 @@ def help_isint_input(text):
                 return float(want)
             except:
                 print("Not a number.")
-
+#select modifier function 
 def modifier_selector(text, modifer_list):
     while True:
 
@@ -191,7 +194,7 @@ def modifier_selector(text, modifer_list):
                 except:
                     print("Not an option.")
         return class_race
-
+#Attribute templates function, adds them to character
 def add_attributes(new_character, character_name):
     attributes = ["strength","dexterity","wisdom","charisma","intelligence","constitution"]
     choice = input("Which attribute template would you like to use?\n 1. Medic\n 2. Heavy \n 3. Long-range \n 4. Scientist \n 5. Rizzler \n 6. Balanced \n 7. Custom\n")
@@ -250,7 +253,7 @@ def add_attributes(new_character, character_name):
         new_character["constitution"] = 15
     for attribute in attributes:
         new_character[f"{attribute}_history"] = []
-
+#helper function to select a character from a list of characters, used in multiple functions
 def select_a_character(characters, prompt):
     while True:
         print_numbered_characters(characters)
@@ -259,7 +262,7 @@ def select_a_character(characters, prompt):
             return characters[int(selected_character_input)-1]
         else:
             print("Invalid input.")
-
+#pretty prints characters in a numbered list
 def print_numbered_characters(characters):
     for i, character in enumerate(characters):
         print(f"{i+1}: {character['name']}")

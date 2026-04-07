@@ -1,9 +1,4 @@
-#Dictionaries 
-import sys
-import time as t
-
 weapons={ #weapons that character has
-
 }
 inventory={ #items that player has
 }
@@ -14,15 +9,10 @@ equipment={
     "hand_2":'',
     "armour":'',
 }
-
-cls="wizard"
 #tuples
-if cls=="wizard":
-    dictionaries=(weapons,inventory,spells) #tuple of the dictionary names
-else:
-    dictionaries=(weapons,inventory)
+dictionaries=(weapons,inventory,spells) #tuple of the dictionary names
 #number ensure function (make sure user input is a number)
-def insure():
+def validate_is_int():
     while True:
         num=input()
         if f"{num}".isnumeric() and  int(num):
@@ -30,7 +20,7 @@ def insure():
         else:
                 print("Please enter a valid input")
 #number ensure function (make sure user input is a number(with parameters)
-def ensure(l,h):
+def validate_is_int_in_range(l,h):
     while True:
         num=input()
         if l and h:
@@ -43,7 +33,6 @@ def ensure(l,h):
                 return int(num)
             else:
                 print("Please enter a valid input")
-
 #epuip function for equiping equipment
 def equip(equipment,cls):
     while True:
@@ -125,21 +114,21 @@ def plus(dictionary,dictname):
     match dictname:
         case "weapons":
             print(f"What is the value of {name}?")
-            value=insure()
+            value=validate_is_int()
             print(f"What is the weight of {name}?")
-            weight=insure()
+            weight=validate_is_int()
             dictionary[name]=[info,value,weight]
             print(f"{name} added to inventory")
         case "inventory":
             print(f"What is the value of {name}?")
-            value=insure()
+            value=validate_is_int()
             print(f"What is the weight of {name}?")
-            weight=insure()
+            weight=validate_is_int()
             dictionary[name]=[info,value,weight]
             print(f"{name} added to inventory")
         case "spells":
             print(f"What level of spell is {name}?")
-            spellev=insure()
+            spellev=validate_is_int()
             time=input(f"What is the casting time of {name}?\n")
             dictionary[name]=[info,spellev,time]
             print(f"{name} added to inventory")
@@ -158,7 +147,7 @@ def minus(dictionary):
 def search_dict(dictionary):
     key=list(dict(dictionary).keys())
     print("How would you like to search your inventory\n1. name\n2. feature")
-    bol=ensure(1,3)
+    bol=validate_is_int_in_range(1,3)
     inp=input("What are you searching for?\n")
     if bol==1:
         if inp in dictionary:
@@ -175,7 +164,7 @@ def search_dict(dictionary):
 def edit(dictionary,dictname):
     while True:
         print(f"1:View your {dictname}\n2:add to {dictname}\n3:remove a {dictname}\n4:search {dictname} for specific name/attribute\n5:Exit editor\nWhich option do you want to use?")
-        inp=ensure(1,6)
+        inp=validate_is_int_in_range(1,6)
         if inp==1:
             view(dictionary,dictname)
         elif inp==2:
@@ -188,7 +177,7 @@ def edit(dictionary,dictname):
             break
     return dictionary
 #User input for choosing dictionary to edit
-def choice(character):
+def edit_person(character):
     if character['class']=="wizard":
         dictionaries=(weapons,inventory,spells) #tuple of the dictionary names
     else:
@@ -196,7 +185,7 @@ def choice(character):
     print(f"What would you like to edit?\n1:weapons\n2:inventory\n3:equipment")
     if character["class"] =="wizard":
         print("4:spells")
-    inp=ensure(0,len(dictionaries)+1)
+    inp=validate_is_int_in_range(0,len(dictionaries)+1)
     if inp==1:
         edit(weapons,"weapons")
         return weapons

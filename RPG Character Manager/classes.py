@@ -1,9 +1,10 @@
 #BH 2nd classes
+#imports
 import random
 import matplotlib.pyplot as plt
 from faker import Faker
 import pandas as pd
-
+#Data visualization, statistical analysis, and random generation classes
 class DataVisualization:
     def __init__(self):
         self.attributes = ["Strength", "Dexterity", "Wisdom", "Charisma", "Intelligence", "Constitution"]
@@ -39,7 +40,6 @@ class DataVisualization:
         plt.legend()
         plt.grid(True)
         plt.show()
-
 class StatisticalAnalyzer:
     # df = pd.DataFrame(characters)
     def calculate_statistics(self, characters):
@@ -53,7 +53,6 @@ class StatisticalAnalyzer:
                 "min": df[attribute].min(),
             }
         return stats
-
 class RandomGenerator:
     def __init__(self):
         self.faker = Faker()
